@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Hangman</title>
+        <script src="https://code.jquery.com/jquery-3.2.1.js"integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="crossorigin="anonymous"></script>
+        <script src="script.js"> </script>
+        <link rel="stylesheet" href="styles.css" type="text/css" />
+    </head>
+<body>
+    <h1 id="title">Hangman</h1>
+    <section id="hangmanContainer">
+        <div id="ceiling"></div>
+        <div id="noose"></div>
+        <div id="head"></div>
+        <div id="bodyWrapper">
+            <div id="body"></div> 
+            <div id="leftArm"></div>
+            <div id="rightArm"></div>
+        </div>
+        <div id="legWrapper">
+            <div id="leftLeg"></div>
+            <div id="rightLeg"></div>
+        </div>
+        <div id="platform"></div>      
+    </section>
+    <section id="instructionsContainer">
+        <h1 id="instructionsTitle">Instructions</h1>
+        <p id="instructionsParagraph">Dont hang the man! Press any letter on your keyboard to start guessing!<p>
+    </section>
+    <section id="guessContainer">
+        <div id="letterContainer"></div>
+    </section>
+</body>
+</html>
