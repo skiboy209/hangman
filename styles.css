@@ -14,6 +14,15 @@ body{
 #title{
     text-align:center;
 }
+/*Hangman Game Wrapper CSS*/
+#gameContainer{
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content:flex-start;
+    align-content: flex-start;
+    align-items:flex-start;
+    padding-top:10vh;
+}
 /*Hangman box css*/
 #hangmanContainer{
     display:flex;
@@ -34,6 +43,7 @@ body{
     background-color:black;
 }
 #noose{
+    opacity: .00001;
     display: flex;
     order: 2;
     width:1vh;
@@ -132,11 +142,10 @@ body{
     display:flex;
     flex-flow: column nowrap;
     order: 2;
-    align-items:center;
-    margin: 5vh;
     background-color:grey;
     width:60vh;
     height:60vh;
+    margin-right:10vh;
     padding: 25px;
 }
 #instructionsTitle{
@@ -156,5 +165,28 @@ body{
     background-color:grey;
     width:60vh;
     height:60vh;
+    align-items:center;
+}
+#letterContainer{
+    display:flex;
+    flex-flow: row nowrap;
+}
+#guessTitle{
+    font-size:20pt;
+    text-align: center;
+}
+.letterDiv{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    align-content: center;     
+    border:2px solid red;
+    width:4vh;
+    height:4vh;
+}   
+/*Correct Letters divider CSS */
+#correctLetters{
+    display:flex;
+    flex-flow: row nowrap;
     align-items:flex-start;
 }

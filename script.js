@@ -1,7 +1,12 @@
 $( document ).ready( function(){
     var letter = '';
-    var word = ['x','y','z'];
-    var answer = [];
+    var word = getWord();
+        var answer = [];
+    var guesses = []
+    var hangArr = ["noose","head","body","leftarm","rightarm","leftleg","rightleg"];
+    var guessAmount = hangArr.length;    
+    //Guess Counter display------------------------------------//
+    $("#guessTitle").html("<div id='guessTitle'>Incorrect letters you have " + guessAmount + " remaining guesses</div>") ;
     $( document ).on( "keydown", function(e) {
         if(e.which == 65){
             letter = 'a';
@@ -83,21 +88,123 @@ $( document ).ready( function(){
         }
         console.log(letter);
 
+        var letterFlag = false;
         var gameLength = word.length;
-        var j = 0;
+        var newDiv = $("<div class='letterDiv'>");
             for (i = 0; i <= word.length; i++){
-            if(letter != word[i]){
-                console.log("ITS A: ", word[i]);
-                newDiv = $("<div>")
+            if(letter === word[i]){
+                newDiv.append(letter);
+                $("#correctLetters").append(newDiv);                
+                /*Duplicate letter checker-----------------------
+                if(answer[i] === word[i]){
+                    alert("Duplicate Letter!!");
+                    newDiv.append(letter);
+                    $("#letterConstainer").append(newDiv);
+                    guessAmount--;
+                }*/
+                //Push correct letter to answers array//
                 answer.push(letter);
-                newDiv.append(answer);
-                $("#letterContainer").append(newDiv);
+                letterFlag = true;
+                console.log("Correct Letters: ", answer);
+                //WIN CHECKER--------------------------------------//
+                if(answer.length >= word.length){
+                setTimeout(function(){
+                alert("You Win! The name was " + word.join(""));
+                letter = '';
+                 word = getWord();
+                 guessAmount = hangArr.length;
+                 j = 0;
+                 answer = [];
+                 guesses = [];
+                $("#head").css("opacity",".00001");
+                $("#noose").css("opacity",".00001");
+                $("#body").css("opacity",".00001");
+                $("#leftArm").css("opacity",".00001");
+                $("#rightArm").css("opacity",".00001");
+                $("#leftLeg").css("opacity",".00001");
+                $("#rightLeg").css("opacity",".00001");   
+                 $("#letterContainer").html("<div id='letterContainer'></div>")
+                 $("#correctLetters").html("<div id='correctLetters'></div>");
+                 $("#guessTitle").html("<div id='guessTitle'>Incorrect letters you have " + guessAmount + " remaining guesses</div>");
+                  }, .01);
                 
+                }
             }
-            else if(letter === word[i]){
-                console.log(letter);
-            }
-            j++;
+        }
+        console.log("GUESSES", guesses.length);
+        //Guess limit checker -----------------------//    
+        if(guesses.length >= hangArr.length){
+        alert("You are out of guesses :(");
+            letter = '';
+            word = getWord();
+            guessAmount = hangArr.length;
+            answer = [];
+            j = 0;
+            guesses = [];
+            $("#head").css("opacity",".00001");
+            $("#noose").css("opacity",".000011");
+            $("#body").css("opacity",".00001");
+            $("#leftArm").css("opacity",".000011");
+            $("#rightArm").css("opacity",".00001");
+            $("#leftLeg").css("opacity",".000011");
+            $("#rightLeg").css("opacity",".000011");            
+        $("#letterContainer").html("<div id='letterContainer'></div>");
+        $("#correctLetters").html("<div id='correctLetters'></div>");
+        $("#guessTitle").html("<div id='guessTitle'>Incorrect letters you have " + guessAmount + " remaining guesses</div>");
+        }
+        else{
+            if(!letterFlag){
+                guesses.push(letter);
+                newDiv.append(letter);
+                $("#letterContainer").append(newDiv);
+                $("#guessTitle").html("<div id='guessTitle'>Incorrect letters you have " + guessAmount + " remaining guesses</div>");
+                hangmanFunction();
+            guessAmount--;                                         
+        }   
         }
     });
 });
+  
+var j = 0;
+var hangArr = ["noose","head","body","leftarm","rightarm","leftleg","rightleg"];
+function hangmanFunction(){
+console.log(hangArr[j]);
+switch (hangArr[j]){
+    case 'head':                    
+    $("#head").css("opacity","1");
+break;
+    case 'noose':
+    $("#noose").css("opacity","1")
+break;
+    case 'body':
+    $("#body").css("opacity","1")
+break;
+    case 'leftarm':
+    $("#leftArm").css("opacity","1")
+break;
+    case 'rightarm':
+    $("#rightArm").css("opacity","1")
+break;
+    case 'leftleg':
+    $("#leftLeg").css("opacity","1")
+break;
+    case 'rightleg':
+    $("#rightLeg").css("opacity","1")
+break;
+}
+j++;       
+}
+
+function getWord(){
+    var words = ["tim","dave","john"]
+    var wordNum = getRandomInt(0,words.length);
+    word = words[wordNum].split("");
+    return word;
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+return Math.floor(Math.random() * (max - min)) + min; 
+}
+//The maximum is exclusive and the minimum is inclusive
