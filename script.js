@@ -5,9 +5,11 @@ $( document ).ready( function(){
     var guesses = []
     var hangArr = ["noose","head","body","leftarm","rightarm","leftleg","rightleg"];
     var guessAmount = hangArr.length;    
+    var isLetter;
     //Guess Counter display------------------------------------//
     $("#guessTitle").html("<div id='guessTitle'>Incorrect letters you have " + guessAmount + " remaining guesses</div>") ;
     $( document ).on( "keydown", function(e) {
+        isLetter = true;
         if(e.which == 65){
             letter = 'a';
         }
@@ -86,28 +88,32 @@ $( document ).ready( function(){
         else if(e.which == 90){
             letter = 'z';
         }
-        console.log(letter);
+        else{
+            isLetter = false;
+        }
 
+if(isLetter){
         var letterFlag = false;
         var gameLength = word.length;
         var newDiv = $("<div class='letterDiv'>");
             for (i = 0; i <= word.length; i++){
-            if(letter === word[i]){
-                newDiv.append(letter);
-                $("#correctLetters").append(newDiv);                
-                /*Duplicate letter checker-----------------------
+            if(letter === word[i]){              
+                //Duplicate letter checker-----------------------
                 if(answer[i] === word[i]){
                     alert("Duplicate Letter!!");
-                    newDiv.append(letter);
+                    /*newDiv.append(letter);
                     $("#letterConstainer").append(newDiv);
-                    guessAmount--;
-                }*/
-                //Push correct letter to answers array//
-                answer.push(letter);
-                letterFlag = true;
-                console.log("Correct Letters: ", answer);
+                    guessAmount--;*/
+                    letterFlag = false;
+                }else{
+                    //Push correct letter to answers array//
+                    newDiv.append(letter);
+                    $("#correctLetters").append(newDiv);  
+                    letterFlag = true;
+                    console.log("Correct Letters: ", answer);
+                }
                 //WIN CHECKER--------------------------------------//
-                if(answer.length >= word.length){
+                if(answer.length >= word.length - 1){
                 setTimeout(function(){
                 alert("You Win! The name was " + word.join(""));
                 letter = '';
@@ -153,15 +159,22 @@ $( document ).ready( function(){
         $("#guessTitle").html("<div id='guessTitle'>Incorrect letters you have " + guessAmount + " remaining guesses</div>");
         }
         else{
+            //Update Incorrect letters/Guesses
             if(!letterFlag){
                 guesses.push(letter);
                 newDiv.append(letter);
                 $("#letterContainer").append(newDiv);
                 $("#guessTitle").html("<div id='guessTitle'>Incorrect letters you have " + guessAmount + " remaining guesses</div>");
                 hangmanFunction();
-            guessAmount--;                                         
-        }   
+                guessAmount--;                                 
+            }else{
+            //Update Correct Letters
+                answer.push(letter);
+            }   
         }
+}else{
+
+}
     });
 });
   
